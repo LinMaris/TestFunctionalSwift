@@ -60,7 +60,8 @@ extension TestMap_Filter_Reduce {
         // 精简写法
         let result = values2.flatMap({ $0 })
         let result2 = result.flatMap({$0})
-        print("flatMap:", result, result2)
+        let result3 = result.flatMap_lc({$0})
+        print("flatMap:", result, result2, result3)
     }
     
     // filter: 过滤掉不符合条件的值
@@ -157,6 +158,15 @@ extension Array {
         var result = [T]()
         for x in self {
             result.append(transform(x))
+        }
+        return result
+    }
+    
+    // 自定义实现flatMap
+    func flatMap_lc<T>(_ transform: (Element) -> [T]) -> [T] {
+        var result = [T]()
+        for x in self {
+            result.append(contentsOf: transform(x))
         }
         return result
     }
